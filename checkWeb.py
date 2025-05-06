@@ -1,16 +1,16 @@
+import os
 import smtplib
 import requests
 import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-url = "https://ita-pak.blsinternational.com/"
+url = "https://ita-pak.blsinternational.com/Global/account/login"
 
-# Update these: deeplearning.developer@gmail.com
-
-sender_email = "deeplearning.developer@gmail.com"
-receiver_email = "hassanjutt7437@gmail.com"
-email_password = "ifwb gagg iwmt kvsd"  # Use Gmail App Password
+# Fetch email credentials from environment variables
+sender_email = os.environ.get("SENDER_EMAIL")
+receiver_email = os.environ.get("RECEIVER_EMAIL")
+email_password = os.environ.get("EMAIL_PASSWORD")
 
 def send_email_alert():
     subject = "Visa Portal is Now Active!"
@@ -35,12 +35,11 @@ def check_site():
     except:
         return False
 
-# Main loop
 while True:
     if check_site():
         send_email_alert()
         print("Website available — email sent!")
-        break  # Exit after successful detection
+        break
     else:
-        print("Website not available. Retrying in 10 minutes.")
-    time.sleep(120)  # Wait 10 minutes
+        print("Website not available. Retrying in 2 minutes.")
+    time.sleep(120)  # Wait for 2 minutes
